@@ -24,7 +24,7 @@ app.add_middleware(
 async def chat(prompt: str = Form(...)):
     try:
         response = client.chat.completions.create(
-            model="gpt-4o",
+            model="gpt-4o-mini",
             messages=[
                 {"role": "system", "content": "Eres un coach de autoayuda empático, cálido y profesional."},
                 {"role": "user", "content": prompt}
