@@ -36,14 +36,16 @@ async def chat(prompt: str = Form(...)):
         return JSONResponse(content={"error": str(e)}, status_code=500)
 
 @app.post("/voz")
-async def voz(texto: str = Form(...)):
+async def voz(
+    texto: str = Form(...),
+    voz: str = Form("nova")  # ← nueva línea para recibir la voz desde el frontend
+):
     try:
         speech_response = client.audio.speech.create(
             model="tts-1",
-            voice="nova",
+            voice=voz,  # ← aquí se usa la voz elegida por el usuario
             input=texto
         )
         return StreamingResponse(io.BytesIO(speech_response.content), media_type="audio/mpeg")
     except Exception as e:
         return JSONResponse(content={"error": str(e)}, status_code=500)
-
